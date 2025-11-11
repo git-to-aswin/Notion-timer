@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Date Progress Bar</title>
+<style>
+  body {
+    font-family: "Inter", sans-serif;
+    background: #fafafa;
+    margin: 0; padding: 1rem;
+  }
+  .container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    padding: 1.2rem;
+    max-width: 500px;
+    margin: auto;
+  }
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: .5rem;
+    color: #333;
+  }
+  .bar-wrapper {
+    background: #e5e7eb;
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+  }
+  .bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#3b82f6,#06b6d4);
+    border-radius: 10px;
+    transition: width 1s ease-in-out;
+  }
+  .info {
+    display: flex;
+    justify-content: space-between;
+    font-size: .9rem;
+    margin-top: .4rem;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>Progress Toward Target</h2>
+    <div class="bar-wrapper">
+      <div id="progress-bar" class="bar"></div>
+    </div>
+    <div class="info">
+      <span id="start"></span>
+      <span id="percent"></span>
+      <span id="end"></span>
+    </div>
+  </div>
+
+<script>
+  // === Configure your dates ===
+  const startDate = new Date("2025-11-11");   // <-- change this
+  const targetDate = new Date("2025-12-31");  // <-- change this
+
+  const today = new Date();
+  const totalDays = (targetDate - startDate) / (1000*60*60*24);
+  const elapsedDays = Math.max(0, (today - startDate) / (1000*60*60*24));
+  const percent = Math.min((elapsedDays / totalDays) * 100, 100);
+
+  // === Update UI ===
+  document.getElementById("progress-bar").style.width = percent + "%";
+  document.getElementById("start").textContent = startDate.toLocaleDateString();
+  document.getElementById("end").textContent = targetDate.toLocaleDateString();
+  document.getElementById("percent").textContent = Math.round(percent) + "%";
+</script>
+</body>
+</html>
+
